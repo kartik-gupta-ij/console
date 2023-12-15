@@ -72,31 +72,30 @@ type LineChartProp = {
 };
 
 const GetoneMinuteCount: FC<LineChartProp> = ({ date }) => {
-	const { data: queryResult, getQueryData } = useQueryResult();
+	const { data: queryResult, getQueryData, loading, error } = useQueryResult();
 
 	useEffect(() => {
 		let LogQuery = {
 			startTime: dayjs(date).subtract(1, 'm').toDate(),
 			endTime: dayjs(date).toDate(),
-			streamName: 'qwe',
+			streamName: 'load',
 			limit: 1000,
 			pageOffset: 0,
 		};
-		getQueryData(
-			LogQuery,
-			`SELECT DATE_TRUNC('minute', p_timestamp) AS minute, COUNT(*) AS count FROM ${'qwe'} GROUP BY minute ORDER BY minute ASC;`,
-		);
+		getQueryData(LogQuery, `SELECT COUNT(*) AS count FROM load ;`);
 	}, []);
 
 	return (
 		<div>
-			{queryResult?.data?.map((valus: any) => {
-				return (
-					<div>
-						<Text>{valus.count}</Text>
-					</div>
-				);
-			})}
+			{!loading && !error
+				? queryResult?.data?.map((valus: any) => {
+						return (
+							<div>
+								<Text>{JSON.stringify(valus)}</Text>
+							</div>
+						);
+				  })
+				: 'hjh'}
 		</div>
 	);
 };
