@@ -12,6 +12,7 @@ import { useGetLogStreamStat } from '@/hooks/useGetLogStreamStat';
 import { HumanizeNumber, formatBytes } from '@/utils';
 import { useGetLogStreamRetention } from '@/hooks/useGetLogStreamRetention';
 
+import Abc from './Abc';
 
 interface StreamInfoProp {
 	streamname: string;
@@ -185,6 +186,7 @@ const Home: FC = () => {
 						return <StreamInfo streamname={key} key={key} />;
 					})}
 				</Stack>
+				<Abc />
 			</Box>
 		);
 	} else {
